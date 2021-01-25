@@ -21,12 +21,12 @@ function serve () {
       server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
         stdio: ['ignore', 'inherit', 'inherit'],
         shell: true
-      });
+      })
 
-      process.on('SIGTERM', toExit);
-      process.on('exit', toExit);
+      process.on('SIGTERM', toExit)
+      process.on('exit', toExit)
     }
-  };
+  }
 }
 
 export default {
@@ -75,4 +75,4 @@ export default {
   watch: {
     clearScreen: false
   }
-};
+}
