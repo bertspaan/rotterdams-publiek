@@ -14,6 +14,10 @@
 		}).addTo(map)
 
 		// TODO add layercontrol
+		// make layer for each map in yaml
+
+		// L.control.layers(baseMaps, overlayMaps).addTo(map);
+
 	})
 
 	async function fetchGeoJSON (url) {
@@ -22,6 +26,7 @@
 
 		// TODO add buildings to map, only show correct buildings!
 		console.log(geojson)
+		// https://leafletjs.com/examples/geojson/
 	}
 
 	fetchGeoJSON('https://raw.githubusercontent.com/mmmenno/rotterdams-publiek/master/plekken/kaart/locaties.geojson')
