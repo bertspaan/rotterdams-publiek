@@ -1,0 +1,69 @@
+{
+  "type": "Annotation",
+  "@id": "https://data.allmaps.org/annotations/i/JcGJ1h65qTWNk1zH/m/HyDtSQkWQ1HBu5ui",
+  "@context": [
+    "http://geojson.org/geojson-ld/geojson-context.jsonld",
+    "http://iiif.io/api/presentation/3/context.json"
+  ],
+  "motivation": "georeference",
+  "target": {
+    "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1985-1014-01",
+    "selector": {
+      "type": "SvgSelector",
+      "value": "<svg width=\"9102\" height=\"6922\"><polygon points=\"8877,191 8933,6765 186,6749 158,171 8877,191\" /></svg>"
+    }
+  },
+  "body": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "image": [
+            5032,
+            4449
+          ]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.494313,
+            51.913411
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "image": [
+            1219,
+            1987
+          ]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.467203,
+            51.921535
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "image": [
+            6918,
+            688
+          ]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.503883,
+            51.929557
+          ]
+        }
+      }
+    ]
+  }
+}
