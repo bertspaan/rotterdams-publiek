@@ -7,7 +7,14 @@
   ],
   "motivation": "georeference",
   "target": {
-    "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1972-755-1",
+    "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1972-755-1/full/full/0/default.jpg",
+    "service": [
+      {
+        "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1972-755-1",
+        "type": "ImageService2",
+        "profile": "http://iiif.io/api/image/2/level2.json"
+      }
+    ],
     "selector": {
       "type": "SvgSelector",
       "value": "<svg width=\"6481\" height=\"5098\"><polygon points=\"103,110 127,3547 1544,3538 1544,4369 4954,4363 4953,3530 6363,3528 6367,106 103,110\" /></svg>"
