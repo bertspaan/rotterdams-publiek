@@ -8,8 +8,15 @@
 	export let yearsPadding
 	export let yearsRange
 
+	let map
+	let mapYearsRange
 	let mapIndex = 0
+
 	$: map = maps[mapIndex]
+	$: mapYearsRange = [
+		Math.min(...map.years) - yearsPadding,
+		Math.max(...map.years) + yearsPadding
+	]
 	$: updateMap(map)
 
 	let leafletMap
@@ -49,10 +56,10 @@
 
 	function sliderChange (event) {
 		const yearsRange = event.detail.values
-		updateLocations(yearsRange)
+		updateLocations(yearsRange, false)
 	}
 
-	function updateLocations (yearsRange) {
+	function updateLocations (yearsRange, fitBounds = true) {
 		if (locationsLayer && locations) {
 
 			const filteredGeoMasks = geoMasks.features
@@ -81,9 +88,11 @@
 
 			locationsLayer.clearLayers()
 			locationsLayer.addData(filteredLocations)
-			leafletMap.fitBounds(locationsLayer.getBounds(), {
-				padding: [10, 10]
-			})
+			if (fitBounds) {
+				leafletMap.fitBounds(locationsLayer.getBounds(), {
+					padding: [10, 10]
+				})
+			}
 		}
 	}
 
@@ -100,10 +109,10 @@
 			return
 		}
 
-		const yearsRange = [
-			Math.min(...map.years) - yearsPadding,
-			Math.max(...map.years) + yearsPadding
-		]
+		// const yearsRange = [
+		// 	Math.min(...map.years) - yearsPadding,
+		// 	Math.max(...map.years) + yearsPadding
+		// ]
 
 		updateLocations(yearsRange)
 
@@ -195,17 +204,23 @@
 			<button on:click={nextMap}><span>Volgende</span>&nbsp;→</button>
 		</div>
   	<div class="metadata">
-			<span class="title">{map.displayTitle}</span>
+			<span class="title"><a href={map.handle}>{map.displayTitle}</a></span>
 			<span class="years">{map.years.join(' – ')}</span>
-			<a href={map.handle}>Bekijk op website van Stadsarchief Rotterdam</a>
 		</div>
   	<div class="controls">
 			<RangeSlider range
 				on:change={sliderChange}
 				springValues={{ stiffness: 1, damping: 1 }}
+				pips={true} pipstep={10}
+				float={true} hover={true}
 				first='label' last='label'
-				min={yearsRange[0]} max={yearsRange[1]}
-				values={yearsRange} />
+				min={Math.floor(yearsRange[0] / 10) * 10} max={Math.ceil(yearsRange[1] / 10) * 10}
+				values={mapYearsRange} />
+			<!-- <div>
+				<label><input type="checkbox" name="fit-bounds" value="value">Centreer kaart</label>
+				<label><input type="checkbox" name="checkbox" value="value">Gebruik jaar van kaart</label>
+				<label><input type="checkbox" name="checkbox" value="value">Verberg locaties die buiten kaart vallen</label>
+			</div> -->
 		</div>
 	</footer>
 </main>
@@ -235,28 +250,38 @@ footer {
 .grid-container {
   display: grid;
   grid-template-columns: 0.5fr 2fr 0.5fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px 2px;
+  grid-template-rows: 1fr 100px;
+  gap: 0.5em;
+	padding: 0.5em;
   grid-template-areas:
     "previous metadata next"
     ". controls .";
 }
 
-.previous { grid-area: previous; }
+.previous {
+	grid-area: previous;
+}
 
-.next { grid-area: next; }
+.next {
+	grid-area: next;
+	place-self: center end;
+}
 
-.metadata { grid-area: metadata; }
+.metadata {
+	grid-area: metadata;
+}
 
-.controls { grid-area: controls; }
-
+.controls {
+	grid-area: controls;
+}
 
 footer button {
+	margin: 0;
+  padding: 0;
 	color: #c2675d;
 	background: none;
 	border: none;
 	font-weight: bold;
-	padding: 1em;
 	cursor: pointer;
 }
 
