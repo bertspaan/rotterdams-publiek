@@ -1,0 +1,60 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "https://data.allmaps.org/annotations/i/nAptubTvkvzuW7ND/m/VQvSPVKSYmrtbUtP",
+        "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1972-755-1/full/full/0/default.jpg",
+        "imageService": {
+          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1972-755-1",
+          "type": "ImageService2",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.460153277169254,
+              51.93129567066905
+            ],
+            [
+              4.4606199365346395,
+              51.91278914473169
+            ],
+            [
+              4.472988119540578,
+              51.91291024272543
+            ],
+            [
+              4.473050297218527,
+              51.908435425917965
+            ],
+            [
+              4.502815409580346,
+              51.90864252890627
+            ],
+            [
+              4.502744353353357,
+              51.91312806417008
+            ],
+            [
+              4.5150519577930694,
+              51.913211109345085
+            ],
+            [
+              4.514830830069423,
+              51.93163829767323
+            ],
+            [
+              4.460153277169254,
+              51.93129567066905
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

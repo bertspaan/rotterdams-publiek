@@ -1,0 +1,216 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "https://data.allmaps.org/annotations/i/nAptubTvkvzuW7ND/m/VQvSPVKSYmrtbUtP",
+        "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1972-755-1/full/full/0/default.jpg",
+        "imageService": {
+          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1972-755-1",
+          "type": "ImageService2",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.460153277169254,
+              51.93129567066905
+            ],
+            [
+              4.4606199365346395,
+              51.91278914473169
+            ],
+            [
+              4.472988119540578,
+              51.91291024272543
+            ],
+            [
+              4.473050297218527,
+              51.908435425917965
+            ],
+            [
+              4.502815409580346,
+              51.90864252890627
+            ],
+            [
+              4.502744353353357,
+              51.91312806417008
+            ],
+            [
+              4.5150519577930694,
+              51.913211109345085
+            ],
+            [
+              4.514830830069423,
+              51.93163829767323
+            ],
+            [
+              4.460153277169254,
+              51.93129567066905
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "https://data.allmaps.org/annotations/i/JcGJ1h65qTWNk1zH/m/HyDtSQkWQ1HBu5ui",
+        "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1985-1014-01/full/full/0/default.jpg",
+        "imageService": {
+          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4001_1985-1014-01",
+          "type": "ImageService2",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.516452625677379,
+              51.93251894914967
+            ],
+            [
+              4.521892270299634,
+              51.905920942580465
+            ],
+            [
+              4.46404491726728,
+              51.901748131822785
+            ],
+            [
+              4.458787323669506,
+              51.928375903666314
+            ],
+            [
+              4.516452625677379,
+              51.93251894914967
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "https://data.allmaps.org/annotations/i/RNHfMHmWx2x3cSfY/m/MHU41xfHhqQmTRpA",
+        "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_1970-2043/full/full/0/default.jpg",
+        "imageService": {
+          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_1970-2043",
+          "type": "ImageService2",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.4419146208379345,
+              51.94020059383783
+            ],
+            [
+              4.442636980058375,
+              51.90868603581287
+            ],
+            [
+              4.4861588364598495,
+              51.908995292630436
+            ],
+            [
+              4.485578179045987,
+              51.94051049940351
+            ],
+            [
+              4.4419146208379345,
+              51.94020059383783
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "https://data.allmaps.org/annotations/i/RqTxxpx6anb1HrNX/m/SYfYn6ah3m3Gwh4r",
+        "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_I-138-02-5/full/full/0/default.jpg",
+        "imageService": {
+          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_I-138-02-5",
+          "type": "ImageService2",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.45787682306123,
+              51.92844594172614
+            ],
+            [
+              4.460999867348342,
+              51.91167699810499
+            ],
+            [
+              4.500639655295248,
+              51.91416558204253
+            ],
+            [
+              4.497342188663431,
+              51.93113369475476
+            ],
+            [
+              4.45787682306123,
+              51.92844594172614
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "https://data.allmaps.org/annotations/i/qgcRZuYMvJs6QUaL/m/9hp6GnUDBBA7ZQX8",
+        "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_I-259-10/full/full/0/default.jpg",
+        "imageService": {
+          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_I-138-02-5",
+          "type": "ImageService2",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.441917609956109,
+              51.94010262049922
+            ],
+            [
+              4.4427480945716225,
+              51.90876813258828
+            ],
+            [
+              4.486434608114395,
+              51.90892871095822
+            ],
+            [
+              4.485534415186112,
+              51.94055281773381
+            ],
+            [
+              4.441917609956109,
+              51.94010262049922
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "type": "AnnotationPage",
+  "@context": [
+    "http://geojson.org/geojson-ld/geojson-context.jsonld",
+    "http://iiif.io/api/presentation/3/context.json"
+  ],
+  "items": [
+    {
+      "type": "Annotation",
+      "@context": [
+        "http://geojson.org/geojson-ld/geojson-context.jsonld",
+        "http://iiif.io/api/presentation/3/context.json"
+      ],
+      "motivation": "georeference",
+      "target": {
+        "type": "Image",
+        "source": "https://rotterdamspubliek.nl/iiif/6D3A2D321823462A9A606210390651B5/full/full/0/default.jpg",
+        "service": [
+          {
+            "@id": "https://rotterdamspubliek.nl/iiif/6D3A2D321823462A9A606210390651B5",
+            "type": "ImageService2",
+            "profile": "http://iiif.io/api/image/2/level2.json"
+          }
+        ],
+        "selector": {
+          "type": "SvgSelector",
+          "value": "<svg width=\"6738\" height=\"4822\"><polygon points=\"177,188 179,4621 6576,4617 6553,173 177,188\" /></svg>"
+        }
+      },
+      "body": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "image": [
+                5044,
+                327
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.488099,
+                51.929985
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "image": [
+                1091,
+                3481
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.466061,
+                51.916231
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "image": [
+                2538,
+                3976
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.47521,
+                51.915028
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Annotation",
+      "@context": [
+        "http://geojson.org/geojson-ld/geojson-context.jsonld",
+        "http://iiif.io/api/presentation/3/context.json"
+      ],
+      "motivation": "georeference",
+      "target": {
+        "type": "Image",
+        "source": "https://rotterdamspubliek.nl/iiif/E17C0C6C9801455497366626D2EA8A29/full/full/0/default.jpg",
+        "service": [
+          {
+            "@id": "https://rotterdamspubliek.nl/iiif/E17C0C6C9801455497366626D2EA8A29",
+            "type": "ImageService2",
+            "profile": "http://iiif.io/api/image/2/level2.json"
+          }
+        ],
+        "selector": {
+          "type": "SvgSelector",
+          "value": "<svg width=\"6510\" height=\"4858\"><polygon points=\"146,171 176,4614 6281,4590 6257,135 146,171\" /></svg>"
+        }
+      },
+      "body": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "image": [
+                164,
+                1197
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.498196,
+                51.927299
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "image": [
+                2341,
+                2490
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.512468,
+                51.923392
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "image": [
+                1710,
+                3006
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.508925,
+                51.921181
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
