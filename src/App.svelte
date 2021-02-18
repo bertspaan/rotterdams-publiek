@@ -1,15 +1,15 @@
 <script>
 	import { onMount } from 'svelte'
+	import RangeSlider from 'svelte-range-slider-pips'
+	import booleanIntersects from '@turf/boolean-intersects'
 
-	// TODO: add year to each map
-	// TODO: generate GeoJSON boundary for each map, using annotation
-	import maps from '../maps.yaml'
-
-	const mapsWithTiles = maps
-		.filter((map) => map.tiles)
+	export let maps
+	export let geoMasks
+	export let yearsPadding
+	export let yearsRange
 
 	let mapIndex = 0
-	$: map = mapsWithTiles[mapIndex]
+	$: map = maps[mapIndex]
 	$: updateMap(map)
 
 	let leafletMap
@@ -23,31 +23,125 @@
 		features: []
 	}
 
-	function updateLocations () {
-		// TODO: only show correct buildings, based on map publication date!
-		locationsLayer.clearLayers()
-		locationsLayer.addData(locations)
+	function handleKeydown (event) {
+		if (event.key === '[') {
+			previousMap()
+		} else if (event.key === ']') {
+			nextMap()
+		} else if (event.code === 'Space') {
+			if (tileLayer) {
+				tileLayer.setOpacity(0)
+			}
+		}
+	}
+
+	function handleKeyup (event) {
+ 		if (event.code === 'Space') {
+			if (tileLayer) {
+				tileLayer.setOpacity(1)
+			}
+		}
+	}
+
+	function yearsOverlap(yearsRange1, yearsRange2) {
+		return yearsRange1[0] <= yearsRange2[1] && yearsRange2[0] <= yearsRange1[1]
+	}
+
+	function sliderChange (event) {
+		const yearsRange = event.detail.values
+		updateLocations(yearsRange)
+	}
+
+	function updateLocations (yearsRange) {
+		if (locationsLayer && locations) {
+
+			const filteredGeoMasks = geoMasks.features
+				.filter((feature) => {
+					const imageId = feature.properties.imageService['@id']
+					return imageId.endsWith(map.id)
+				})
+
+			let geoMask
+			if (filteredGeoMasks && filteredGeoMasks.length === 1) {
+				geoMask = filteredGeoMasks[0]
+			}
+
+			const filteredLocations = {
+				type: 'FeatureCollection',
+				features: locations.features
+					.filter((feature) => {
+						const featureYears = [
+							parseInt(feature.properties.startyear) || -Infinity,
+							parseInt(feature.properties.endyear) || Infinity
+						]
+
+						return yearsOverlap(yearsRange, featureYears) && booleanIntersects(geoMask, feature)
+					})
+			}
+
+			locationsLayer.clearLayers()
+			locationsLayer.addData(filteredLocations)
+			leafletMap.fitBounds(locationsLayer.getBounds(), {
+				padding: [10, 10]
+			})
+		}
 	}
 
 	function previousMap () {
-		mapIndex = (mapIndex - 1 + mapsWithTiles.length) % mapsWithTiles.length
+		mapIndex = (mapIndex - 1 + maps.length) % maps.length
 	}
 
 	function nextMap () {
-		mapIndex = (mapIndex + 1) % mapsWithTiles.length
+		mapIndex = (mapIndex + 1) % maps.length
 	}
 
 	function updateMap (map) {
+		if (!locations) {
+			return
+		}
+
+		const yearsRange = [
+			Math.min(...map.years) - yearsPadding,
+			Math.max(...map.years) + yearsPadding
+		]
+
+		updateLocations(yearsRange)
+
 		if (tileLayer) {
 			tileLayer.addTo(leafletMap)
 			tileLayer.setUrl(map.tiles)
 		}
 	}
 
+	function createPopup (feature) {
+		const properties = feature.properties
+		const width = 250
+
+		let html = [
+			`<h3>${properties.label}</h3>`
+		]
+
+		if (properties.startyear || properties.endyear) {
+			const startYear = properties.startyear || ''
+			const endYear = properties.endyear || ''
+
+			html.push(`<div><span>${startYear} – ${endYear}</span>⁠</div>`)
+		}
+
+		if (properties.image) {
+			html.push(`<img style="width: ${width}px;" src="${properties.image}?width=${width}px" />`)
+		}
+
+		html.push(`<p><a href="https://rotterdamspubliek.nl/plekken/plek.php?qid=${properties.wdid}">Bekijk op Rotterdams Publiek</a></p>`)
+
+		return html.join('\n')
+	}
+
 	onMount(async () => {
 	 	leafletMap = L.map('map').setView([51.9200, 4.4895], 13)
 
-		const tileUrl = 'https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'
+		// const tileUrl = 'https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'
+		const tileUrl = 'https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png'
 
 		const baseLayer = L.tileLayer(tileUrl, {
 			maxZoom: 18
@@ -65,11 +159,11 @@
 			fillOpacity: 0.3
 		}
 
-		// TODO: add popup with link:
-		// https://rotterdamspubliek.nl/plekken/plek.php?qid=Q29569055
-
 		locationsLayer = L.geoJSON(emptyGeoJSON, {
-			pointToLayer: function (feature, latlng) {
+			onEachFeature: (feature, layer) => {
+        layer.bindPopup(createPopup(feature))
+    	},
+			pointToLayer: (feature, latlng) => {
 				return new L.CircleMarker(latlng, {
 					...style,
 					radius: 8,
@@ -78,14 +172,13 @@
 			},
 			style
 		}).addTo(leafletMap)
-
-		updateMap(map)
 	})
 
 	async function fetchLocations (url) {
 		const response = await fetch(url)
 		locations = await response.json()
-		updateLocations()
+
+		updateMap(map)
 	}
 
 	fetchLocations('https://raw.githubusercontent.com/mmmenno/rotterdams-publiek/master/plekken/kaart/locaties.geojson')
@@ -93,35 +186,81 @@
 
 <main>
 	<div id="map"></div>
-	<footer>
-		<button on:click={previousMap}>Vorige</button>
-		<h2>{map.displayTitle}</h2>
-		<button on:click={nextMap}>Volgende</button>
+	<!-- Spatiebalk: zet kaartlaag even aan/uit -->
+	<footer class="grid-container">
+	  <div class="previous">
+			<button on:click={previousMap}>←&nbsp;<span>Vorige</span></button>
+		</div>
+  	<div class="next">
+			<button on:click={nextMap}><span>Volgende</span>&nbsp;→</button>
+		</div>
+  	<div class="metadata">
+			<span class="title">{map.displayTitle}</span>
+			<span class="years">{map.years.join(' – ')}</span>
+			<a href={map.handle}>Bekijk op website van Stadsarchief Rotterdam</a>
+		</div>
+  	<div class="controls">
+			<RangeSlider range
+				on:change={sliderChange}
+				springValues={{ stiffness: 1, damping: 1 }}
+				first='label' last='label'
+				min={yearsRange[0]} max={yearsRange[1]}
+				values={yearsRange} />
+		</div>
 	</footer>
 </main>
+<svelte:window
+	on:keyup={handleKeyup}
+	on:keydown={handleKeydown} />
 
 <style>
-	main {
-		width: 100%;
-		height: 100%;
+main {
+	width: 100%;
+	height: 100%;
 
-		display: flex;
-		flex-direction: column;
-	}
+	display: flex;
+	flex-direction: column;
+}
 
-	#map {
-		flex-grow: 1;
-	}
+#map {
+	flex-grow: 1;
+}
 
-	footer {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
+footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 0.5fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px 2px;
+  grid-template-areas:
+    "previous metadata next"
+    ". controls .";
+}
+
+.previous { grid-area: previous; }
+
+.next { grid-area: next; }
+
+.metadata { grid-area: metadata; }
+
+.controls { grid-area: controls; }
+
+
+footer button {
+	color: #c2675d;
+	background: none;
+	border: none;
+	font-weight: bold;
+	padding: 1em;
+	cursor: pointer;
+}
+
+footer button:hover span {
+	text-decoration: underline;
+}
 </style>

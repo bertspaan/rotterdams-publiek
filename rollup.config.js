@@ -1,4 +1,5 @@
 import svelte from 'rollup-plugin-svelte'
+import { dataToEsm } from '@rollup/pluginutils'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import livereload from 'rollup-plugin-livereload'
@@ -59,6 +60,27 @@ export default {
     }),
     commonjs(),
     yaml(),
+    {
+      name: 'geojson',
+      transform (json, id) {
+        if (id.slice(-8) !== '.geojson') return null
+
+        try {
+          const parsed = JSON.parse(json)
+          return {
+            code: dataToEsm(parsed, {
+              namedExports: true
+            }),
+            map: { mappings: '' }
+          }
+        } catch (err) {
+          const message = 'Could not parse GeoJSON file'
+          const position = parseInt(/[\d]/.exec(err.message)[0], 10)
+          this.warn({ message, id, position })
+          return null
+        }
+      }
+    },
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated
