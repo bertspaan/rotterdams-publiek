@@ -179,7 +179,7 @@
         "id": "https://data.allmaps.org/annotations/i/qgcRZuYMvJs6QUaL/m/9hp6GnUDBBA7ZQX8",
         "source": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_I-259-10/full/full/0/default.jpg",
         "imageService": {
-          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_I-138-02-5",
+          "@id": "https://rotterdamspubliek.nl/iiif/NL-RtSA_4201_I-259-10",
           "type": "ImageService2",
           "profile": "http://iiif.io/api/image/2/level2.json"
         }
