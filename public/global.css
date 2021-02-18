@@ -80,7 +80,12 @@ button:focus {
 }
 
 .leaflet-popup-content {
-  margin: 1em;
+  margin: 10px;
+}
+
+.leaflet-popup-content h3,
+.leaflet-popup-content p {
+	margin: 0;
 }
 
 .leaflet-container a,
