@@ -109,11 +109,6 @@
 			return
 		}
 
-		// const yearsRange = [
-		// 	Math.min(...map.years) - yearsPadding,
-		// 	Math.max(...map.years) + yearsPadding
-		// ]
-
 		updateLocations(yearsRange)
 
 		if (tileLayer) {
@@ -249,8 +244,8 @@ footer {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.5fr 2fr 0.5fr;
-  grid-template-rows: 1fr 100px;
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-rows: min-content min-content;
   gap: 0.5em;
 	padding: 0.5em;
   grid-template-areas:
@@ -264,15 +259,23 @@ footer {
 
 .next {
 	grid-area: next;
-	place-self: center end;
 }
 
 .metadata {
 	grid-area: metadata;
+	place-self: center
 }
 
 .controls {
 	grid-area: controls;
+}
+
+.title a, .title a:visited {
+	color: black;
+}
+
+.years {
+	color: #999;
 }
 
 footer button {
