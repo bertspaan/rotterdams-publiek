@@ -90,7 +90,7 @@
 			locationsLayer.addData(filteredLocations)
 			if (fitBounds) {
 				leafletMap.fitBounds(locationsLayer.getBounds(), {
-					padding: [10, 10]
+					padding: [5, 5]
 				})
 			}
 		}
@@ -142,7 +142,9 @@
 	}
 
 	onMount(async () => {
-	 	leafletMap = L.map('map').setView([51.9200, 4.4895], 13)
+	 	leafletMap = L.map('map', {
+			 attributionControl: false
+		 }).setView([51.9200, 4.4895], 13)
 
 		// const tileUrl = 'https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'
 		const tileUrl = 'https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png'
