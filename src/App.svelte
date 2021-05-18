@@ -8,6 +8,8 @@
 	export let yearsPadding
 	export let yearsRange
 
+	let sliderStep = 10
+
 	let map
 	let mapYearsRange
 	let mapIndex = 0
@@ -50,6 +52,16 @@
 		}
 	}
 
+	function handleResize () {
+		if (window.innerWidth < 600) {
+			sliderStep = 50
+		} else if (window.innerWidth < 1000) {
+			sliderStep = 20
+		} else {
+			sliderStep = 10
+		}
+	}
+
 	function yearsOverlap(yearsRange1, yearsRange2) {
 		return yearsRange1[0] <= yearsRange2[1] && yearsRange2[0] <= yearsRange1[1]
 	}
@@ -73,7 +85,20 @@
 				geoMask = filteredGeoMasks[0]
 			}
 
-			const filteredLocations = {
+			const locationsFilteredByYear = {
+				type: 'FeatureCollection',
+				features: locations.features
+					.filter((feature) => {
+						const featureYears = [
+							parseInt(feature.properties.startyear) || -Infinity,
+							parseInt(feature.properties.endyear) || Infinity
+						]
+
+						return yearsOverlap(yearsRange, featureYears) // && booleanIntersects(geoMask, feature)
+					})
+			}
+
+			const locationsFilteredByYearAndGeometry = {
 				type: 'FeatureCollection',
 				features: locations.features
 					.filter((feature) => {
@@ -87,9 +112,9 @@
 			}
 
 			locationsLayer.clearLayers()
-			locationsLayer.addData(filteredLocations)
+			locationsLayer.addData(locationsFilteredByYear)
 			if (fitBounds) {
-				leafletMap.fitBounds(locationsLayer.getBounds(), {
+				leafletMap.fitBounds(L.geoJson(locationsFilteredByYearAndGeometry).getBounds(), {
 					padding: [5, 5]
 				})
 			}
@@ -109,7 +134,12 @@
 			return
 		}
 
-		updateLocations(yearsRange)
+		const mapYearsRange = [
+			Math.min(...map.years) - yearsPadding,
+			Math.max(...map.years) + yearsPadding
+		]
+
+		updateLocations(mapYearsRange)
 
 		if (tileLayer) {
 			tileLayer.addTo(leafletMap)
@@ -129,11 +159,11 @@
 			const startYear = properties.startyear || ''
 			const endYear = properties.endyear || ''
 
-			html.push(`<div><span>${startYear} – ${endYear}</span>⁠</div>`)
+			html.push(`<span class="years">${startYear} – ${endYear}</span>⁠`)
 		}
 
 		if (properties.image) {
-			html.push(`<img style="width: ${width}px;" src="${properties.image}?width=${width}px" />`)
+			html.push(`<a href="https://rotterdamspubliek.nl/plekken/plek.php?qid=${properties.wdid}"><img style="width: ${width}px;" src="${properties.image}?width=${width}px" /></a>`)
 		}
 
 		html.push(`<p><a href="https://rotterdamspubliek.nl/plekken/plek.php?qid=${properties.wdid}">Bekijk op Rotterdams Publiek</a></p>`)
@@ -143,6 +173,8 @@
 
 	onMount(async () => {
 	 	leafletMap = L.map('map', {
+			 minZoom: 13,
+			 maxZoom: 18,
 			 attributionControl: false
 		 }).setView([51.9200, 4.4895], 13)
 
@@ -172,7 +204,7 @@
 			pointToLayer: (feature, latlng) => {
 				return new L.CircleMarker(latlng, {
 					...style,
-					radius: 8,
+					radius: 5,
 					weight: 2,
 				})
 			},
@@ -188,44 +220,49 @@
 	}
 
 	fetchLocations('https://raw.githubusercontent.com/mmmenno/rotterdams-publiek/master/plekken/kaart/locaties.geojson')
+	handleResize()
 </script>
 
 <main>
 	<div id="map"></div>
-	<!-- Spatiebalk: zet kaartlaag even aan/uit -->
-	<footer class="grid-container">
-	  <div class="previous">
-			<button on:click={previousMap}>←&nbsp;<span>Vorige</span></button>
-		</div>
-  	<div class="next">
-			<button on:click={nextMap}><span>Volgende</span>&nbsp;→</button>
-		</div>
-  	<div class="metadata">
-			<span class="title"><a href={map.handle}>{map.displayTitle}</a></span>
-			<span class="years">{map.years.join(' – ')}</span>
+	<footer>
+		<div class="maps">
+			<div class="previous">
+				<button on:click={previousMap}>←&nbsp;<span title="Volgende kaart - of gebruik de [-toets">Vorige</span></button>
+			</div>
+			<div class="metadata">
+				<a class="title" title={map.displayTitle} href={map.handle}>{map.displayTitle}</a>
+				<span class="years">{map.years.join(' – ')}</span>
+			</div>
+			<div class="next">
+				<button on:click={nextMap}><span title="Volgende kaart - of gebruik de ]-toets">Volgende</span>&nbsp;→</button>
+			</div>
 		</div>
   	<div class="controls">
 			<RangeSlider range
 				on:change={sliderChange}
 				springValues={{ stiffness: 1, damping: 1 }}
-				pips={true} pipstep={10}
+				pips={true} pipstep={sliderStep}
 				float={true} hover={true}
-				first='label' last='label'
-				min={Math.floor(yearsRange[0] / 10) * 10} max={Math.ceil(yearsRange[1] / 10) * 10}
+				first='label' last='label' rest='label'
+				min={Math.floor(yearsRange[0] / 10) * 10} max={2020}
 				values={mapYearsRange} />
-			<!-- <div>
-				<label><input type="checkbox" name="fit-bounds" value="value">Centreer kaart</label>
-				<label><input type="checkbox" name="checkbox" value="value">Gebruik jaar van kaart</label>
-				<label><input type="checkbox" name="checkbox" value="value">Verberg locaties die buiten kaart vallen</label>
-			</div> -->
 		</div>
 	</footer>
 </main>
 <svelte:window
 	on:keyup={handleKeyup}
-	on:keydown={handleKeydown} />
-
+	on:keydown={handleKeydown}
+	on:resize={handleResize} />
 <style>
+:root {
+	--red: #c2675d;
+	--range-range: var(--red);
+	--range-float: var(--red);
+	--range-handle: var(--red);
+	--range-handle-focus: var(--red);
+}
+
 main {
 	width: 100%;
 	height: 100%;
@@ -240,50 +277,51 @@ main {
 
 footer {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: space-between;
+	padding: 0.5em;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: min-content 1fr min-content;
-  grid-template-rows: min-content min-content;
-  gap: 0.5em;
-	padding: 0.5em;
-  grid-template-areas:
-    "previous metadata next"
-    ". controls .";
+.maps {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 600px) {
+	.maps button span {
+		display: none;
+	}
 }
 
 .previous {
-	grid-area: previous;
+	padding-right: 0.5em;
 }
 
 .next {
-	grid-area: next;
+	padding-left: 0.5em;
+}
+
+.previous, .next {
+	flex-shrink: 0;
 }
 
 .metadata {
-	grid-area: metadata;
-	place-self: center
+	display: inline-block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
-.controls {
-	grid-area: controls;
-}
-
-.title a, .title a:visited {
+.title, .title:visited {
 	color: black;
-}
-
-.years {
-	color: #999;
 }
 
 footer button {
 	margin: 0;
   padding: 0;
-	color: #c2675d;
+	color: var(--red);
 	background: none;
 	border: none;
 	font-weight: bold;
