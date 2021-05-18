@@ -1,6 +1,6 @@
 # Rotterdams Publiek
 
-See https://bertspaan/rotterdams-publiek.
+See https://bertspaan.nl/rotterdams-publiek.
 
 Start app:
 
