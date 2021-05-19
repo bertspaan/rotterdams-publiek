@@ -45,23 +45,23 @@
 
 # ======================================================================================================
 
-- id: NL-RtSA_4201_I-224
-  filename: NL-RtSA_4201_I-224.jpg
-  displayTitle: Straatnamenkaart van Rotterdam en omgeving
-  title: I-224 Straatnamenkaart van Rotterdam en omgeving.
-  handle: https://hdl.handle.net/21.12133/3F55B4EC14BD453080E0376A3B511819
-  years: [1940, 1946]
+# - id: NL-RtSA_4201_I-224
+#   filename: NL-RtSA_4201_I-224.jpg
+#   displayTitle: Straatnamenkaart van Rotterdam en omgeving
+#   title: I-224 Straatnamenkaart van Rotterdam en omgeving.
+#   handle: https://hdl.handle.net/21.12133/3F55B4EC14BD453080E0376A3B511819
+#   years: [1940, 1946]
 
-- id: NL-RtSA_4201_1975-1179-5I
-  filename: NL-RtSA_4201_1975-1179-5I.jpg
-  displayTitle: "Gemeentewerken Rotterdam - Blad 5: Rotterdam-Centrum"
-  title: "1975-1179-5I Blad 5: Rotterdam-Centrum."
-  handle: https://hdl.handle.net/21.12133/D646F5208F1640AE9D1D45D2DBA8B44B
-  years: [1943]
+# - id: NL-RtSA_4201_1975-1179-5I
+#   filename: NL-RtSA_4201_1975-1179-5I.jpg
+#   displayTitle: "Gemeentewerken Rotterdam - Blad 5: Rotterdam-Centrum"
+#   title: "1975-1179-5I Blad 5: Rotterdam-Centrum."
+#   handle: https://hdl.handle.net/21.12133/D646F5208F1640AE9D1D45D2DBA8B44B
+#   years: [1943]
 
-- id: NL-RtSA_4201_1975-1221
-  filename: NL-RtSA_4201_1975-1221.jpg
-  displayTitle: Gemeentewerken Rotterdam - Plattegrond van Rotterdam en omgeving
-  title: 1975-1221 Plattegrond van Rotterdam en omgeving.
-  handle: https://hdl.handle.net/21.12133/67723B11BFE94D8998134785A427B9ED
-  years: [1942]
+# - id: NL-RtSA_4201_1975-1221
+#   filename: NL-RtSA_4201_1975-1221.jpg
+#   displayTitle: Gemeentewerken Rotterdam - Plattegrond van Rotterdam en omgeving
+#   title: 1975-1221 Plattegrond van Rotterdam en omgeving.
+#   handle: https://hdl.handle.net/21.12133/67723B11BFE94D8998134785A427B9ED
+#   years: [1942]

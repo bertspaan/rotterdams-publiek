@@ -7,12 +7,12 @@
 	export let geoMasks
 	export let yearsPadding
 	export let yearsRange
+	export let mapIndex = 0
 
 	let sliderStep = 10
 
 	let map
 	let mapYearsRange
-	let mapIndex = 0
 
 	$: map = maps[mapIndex]
 	$: mapYearsRange = [
@@ -62,7 +62,7 @@
 		}
 	}
 
-	function yearsOverlap(yearsRange1, yearsRange2) {
+	function yearsOverlap (yearsRange1, yearsRange2) {
 		return yearsRange1[0] <= yearsRange2[1] && yearsRange2[0] <= yearsRange1[1]
 	}
 
