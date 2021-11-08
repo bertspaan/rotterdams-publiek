@@ -186,8 +186,7 @@
 		}).addTo(leafletMap)
 
 		tileLayer = L.tileLayer('', {
-			maxZoom: 18,
-			tms: true
+			maxZoom: 18
 		})
 
 		const style = {
